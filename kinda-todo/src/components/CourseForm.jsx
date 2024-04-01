@@ -2,8 +2,10 @@ import { useState } from "react";
 import useCourseStore from "../app/courseStore";
 
 const CourseForm = () => {
-  // const addCourse = useCourseStore((state) => state.addCourse)
-  const { addCourse } = useCourseStore();
+  // const { addCourse } = useCourseStore();
+  // The above is not performance oriented as it listens to every state in the store 
+  // and re-renders the component unecessarily
+  const addCourse = useCourseStore((state) => state.addCourse);
 
   const [courseTitle, setCourseTitle] = useState("");
   console.log("CourseForm rendered");

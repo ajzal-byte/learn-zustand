@@ -2,7 +2,17 @@ import React from "react";
 import useCourseStore from "../app/courseStore";
 
 const CourseList = () => {
-  const { courses, removeCourse, toggleCourseStatus } = useCourseStore();
+  // const { courses, removeCourse, toggleCourseStatus } = useCourseStore();
+  // The above is not performance oriented as it listens to every state in the store
+  // and re-renders the component unecessarily
+  const { courses, removeCourse, toggleCourseStatus } = useCourseStore(
+    (state) => ({
+      courses: state.courses,
+      removeCourse: state.removeCourse,
+      toggleCourseStatus: state.toggleCourseStatus,
+    })
+  );
+
   return (
     <>
       <ul>
@@ -21,7 +31,7 @@ const CourseList = () => {
                   onChange={() => toggleCourseStatus(course.id)}
                 />
               </span>
-              <span style={{color: "black"}}>{course?.title}</span>
+              <span style={{ color: "black" }}>{course?.title}</span>
               <button
                 className="delete btn"
                 onClick={() => removeCourse(course.id)}
